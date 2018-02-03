@@ -1,5 +1,6 @@
 import tensorflow as tf
 import numpy as np
+import matplotlib.pyplot as plt
 
 def add_layer(inputs, in_size, out_size, activation_function=None):
     Weights = tf.Variable(tf.random_normal([in_size,out_size]))
@@ -29,7 +30,20 @@ init = tf.global_variables_initializer()
 sess = tf.Session()
 sess.run(init)
 
+fig = plt.figure()
+axis = fig.add_subplot(1,1,1)
+axis.scatter(x_data,y_data)
+plt.ion()
+plt.show()
 for i in range(1000):
     sess.run(train_step,feed_dict={xs:x_data,ys:y_data})
     if i % 50 == 0:
-        print(sess.run(loss,feed_dict={xs:x_data,ys:y_data}))
+        # see the step improvement
+        # print(sess.run(loss,feed_dict={xs:x_data,ys:y_data}))
+        try:
+            axis.lines.remove(lines[0])
+        except Exception:
+            pass
+        prediction_value = sess.run(prediction, feed_dict={xs:x_data})
+        lines = axis.plot(x_data,prediction_value, 'r-', lw=5)
+        plt.pause(0.1)
