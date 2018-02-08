@@ -1,4 +1,3 @@
-from __future__ import print_function
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 # number 1 to 10 data
@@ -74,4 +73,4 @@ for i in range(1000):
     sess.run(train_step, feed_dict={xs: batch_xs, ys: batch_ys, keep_prob: 0.5})
     if i % 50 == 0:
         print(compute_accuracy(
-            mnist.test.images[:100], mnist.test.lables[:100]))
+            mnist.test.images, mnist.test.lables))
